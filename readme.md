@@ -30,7 +30,7 @@
      注：Dumper只有配合精简过的protoc生成代码才能正常使用，因为里面有个假设: pb obj中所有的public NonStatic getter都是.proto中定义的field，而原版protoc生成的代码并不满足这个假设.
 
 
-目录结构：
+目录结构：  
 1，old - 未修改的原版pb:  
    1.1，Google.Protobuf  
        protobuf的runtime  
