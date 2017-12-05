@@ -1,8 +1,9 @@
-﻿基于google官方3.4.1版本的protobuf c#-runtime以及3.4.0版本的protoc修改而来，可用于ILRuntime，同时移除了不常用的功能，精简了生成代码的体积.
+基于google官方3.4.1版本的protobuf c#-runtime以及3.4.0版本的protoc修改而来，可用于ILRuntime，同时移除了不常用的功能，精简了生成代码的体积.
 当用于ILRuntime时，protobuf-runtime放在主工程（不可热更），让解析pb的代码跑在CLR上，提供更快的解析速度; 从.proto生成的c#代码放在热更dll工程(可热更).
 
 已知限制：
   1，只支持proto3协议，不支持proto2
+
   2, 不支持WellKnownTypes，也就是.proto里不支持Any、TimeSpan、Duration等google.protobuf下预定义的.proto类型
   3，不支持JsonParser、FileDescriptor等反射功能
   4，.proto里不支持Map和oneof - 实现上应该是用到了反射，没细看，不确定能否在不支持反射的情况支持这个.
@@ -11,7 +12,6 @@
 修改的内容：
   注：runtime部分本质上可以改动很少（移除IMessage的各种继承和不会用到的接口方法，处理下编译错误就行），但出于个人习惯，把不会（被精简过的protoc生成的代码）用到的runtime部分全部都砍掉了，
       比如Relfection目录、WellKnown目录、JsonFromatter目录等都整个砍掉了. 这部分不砍掉也是没任何问题的，如果不砍掉，后续希望把protoc砍掉的部分功能加回来也更方便。
-
   1, runtime
      兼容.net framework 3.5
   
