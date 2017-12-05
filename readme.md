@@ -3,7 +3,6 @@
 
 已知限制：
   1，只支持proto3协议，不支持proto2
-
   2, 不支持WellKnownTypes，也就是.proto里不支持Any、TimeSpan、Duration等google.protobuf下预定义的.proto类型
   3，不支持JsonParser、FileDescriptor等反射功能
   4，.proto里不支持Map和oneof - 实现上应该是用到了反射，没细看，不确定能否在不支持反射的情况支持这个.
@@ -17,7 +16,7 @@
   
   2, runtime & protroc 
      移除了反射部分
-  
+
   3，runtime 
      移除了WellKnownTypes
      注: WellKnownTypes只是从google默认定义的一组(常用).proto文件生成的代码，随runtime自带，因为我们改了runtime,所以自带的这些代码（从老的protoc生成）会有编译错误，如果你需要这个功能，处理一下编译错误就好，我是嫌麻烦整个都砍了.
