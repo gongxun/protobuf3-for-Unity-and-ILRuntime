@@ -1,0 +1,112 @@
+syntax = "proto3";
+package gx_test;
+
+option java_package = "com.jedi.serverEngine.message";  
+option java_outer_classname = "UserMessagePB";  
+
+message gx_data{
+
+	/**************test scalar*********************/
+	double sc_double = 1;
+	float sc_float = 2;
+	int32 sc_int32 = 3;
+	int64 sc_int64 = 4; //long
+	uint32 sc_uint32 = 5;
+	uint64 sc_uint64 = 6; //ulong
+	sint32 sc_sint32 = 7;
+	sint64 sc_sint64 = 8;
+	fixed32 sc_fixed32 = 9;
+	fixed64 sc_fixed64 = 10;
+	sfixed32 sc_sfixed32 = 11;
+	sfixed64 sc_sfixed64 = 12;
+	bool sc_bool = 13;
+	string sc_string = 14;
+	bytes sc_bytes = 15;
+
+	/**************test enum*********************/
+	enum MyEnum{
+		enum_0 = 0;
+		enum_1 = 1;
+		enum_2 = 2;
+		enum_7 = 7;
+	}
+
+	//test Enum alias
+	enum MyEnum2{
+		option allow_alias = true;
+		enum_20 = 0;
+		enum_21 = 11;
+		enum_22 = 11;
+	}
+
+	MyEnum t_enum = 16;
+	MyEnum2 t_enum_2 = 17;
+
+	/**************test type*********************/
+	gx_data_type t_class = 18;
+
+	//test nested type
+	message gx_data_nested{
+		string d = 1;
+	}
+	gx_data_nested t_nest_type = 19;
+
+
+	/**************test repeated fields*********************/
+	repeated int32 rep_int32 = 20;
+	repeated string rep_string = 21;
+	repeated bytes rep_bytes = 22;
+	repeated MyEnum rep_enum = 23;
+	repeated gx_data_type rep_type = 24;
+}
+
+message gx_data_type{
+	float d1 = 10;
+	int32 d2 = 20;
+	string d3 = 30;
+	repeated string d4 = 40;
+}
+
+/********** test importing ******************/
+import "gx_test_other.proto";
+message gx_data3{
+	gx_test_other.gx_data_other otherData = 1;
+	int32 d = 2;
+}
+
+
+/*********************** 不支持的特性 start *******************************************/
+
+/********** test WellKnownTypes: Any ******************/
+/*
+import "google/protobuf/any.proto";
+message gx_data_any{
+	google.protobuf.Any any_data = 1;
+	int32 d = 2;
+}
+*/
+
+
+/*************** test Oneof ********************/
+message gx_data_oneof{
+	oneof t_oneof{
+		string name = 1;
+		int32 index = 2;
+	}
+}
+
+
+/*************** test Map ********************/
+/*
+message gx_data_map{
+	map<string, int32> m = 1;
+}
+*/
+
+
+/************** test service ******************/
+service SearchService {
+  rpc Search (gx_data_type) returns (gx_data_type);
+}
+
+/*********************** 不支持的特性 end *******************************************/

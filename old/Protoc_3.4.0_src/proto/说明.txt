@@ -1,0 +1,14 @@
+﻿1，通信协议格式
+
+包头 uint32 length 
+目前length&0x10000000 != 0 表示压缩
+现添加length&0x8000000 !=0 表示是内容是protobuff
+
+为protobuff时
+包体内容为 user_message.user_message
+
+2，客户端使用
+ a, 双击GenAllC#.bat，会从目录下所有的.proto生成c#代码文件，并输出到OuputC#目录里.
+ b, 拖一个.proto文件到GenOneC#.bat上，会生成这个.proto所对应的c#代码文件，并输出到OuputC#目录。
+ 
+ 输出目录可按各人习惯自行修改，比如直接输出到p21 u3d项目工程里，就无需人工拷贝. pb C#代码统一放在Assets/Standard Assets/ProtoBuffer里，放Standard Assets目录里是出于u3d C#代码编译顺序\依赖的考虑，避免改动逻辑代码的时候也会重新编译pb代码。

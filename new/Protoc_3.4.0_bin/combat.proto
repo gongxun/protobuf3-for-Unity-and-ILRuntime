@@ -1,0 +1,93 @@
+syntax = "proto3";
+package Combat;
+
+option java_package = "com.jedi.serverEngine.message";  
+option java_outer_classname = "PBCombat";
+
+
+
+//定义据点城池
+message combat_point{
+
+}
+
+
+//定义战斗武将
+message combat_general{
+	uint32 gid = 1; //武将模板id	
+	uint32 pos = 2; //战斗内武将出战顺序，初始阵位
+	//...各种属性
+	uint32 stype = 3; //武将兵种
+	uint32 hp = 4;//武将初始血量
+	uint32 lv = 5;//武将等级
+	uint32 shp = 6;//兵团初始血量
+	string station = 7;//武将阵位，变阵后阵位
+}
+//定义城墙
+message combat_wall{
+	uint32 type = 1; //箭塔类型，1后排，2中间
+	repeated combat_arrow arrow = 2;//箭塔
+}
+//定义箭塔
+message combat_arrow{
+	uint32 pos = 1;//位置
+	uint32 hp = 2;//初始血量
+}
+
+//定义战斗方
+message combat_member{
+	string name = 1; //名字
+	repeated combat_general generals = 2;//武将
+}
+
+message once_buffstep{
+	uint32 bid = 1;
+	uint32 bstep = 2;
+}
+
+//释放buff
+message once_buff{
+	string defstation = 1;//受体的阵位
+	uint32 state = 2;//5加buff
+	uint32 bid = 3;
+	uint32 bstep = 4;
+}
+
+
+//定义一次攻击
+message once_attack{
+	string defstation = 1;//受体的阵位
+	uint32 state = 2;//0闪避；1普攻；2暴击；3眩晕；4治疗
+	uint32 deftype = 3;//1武将；2兵团
+	uint32 hpoff = 4;//失去血量（负数即为增加）
+	uint32 hpleft = 5;//还剩血量
+}
+//定义一次反伤、吸血
+message once_back{
+	uint32 state = 1;//6反伤；7吸血
+	uint32 deftype = 2;//1武将；2兵团
+	uint32 hpoff = 3;//失去血量（负数即为增加）
+	uint32 hpleft = 4;//还剩血量
+}
+
+//定义回合数据
+message round_info{
+	uint32 atk = 1;//0攻击方，1防守方
+	uint32 pos = 2;//combat_general中武将的出战顺序
+	uint32 sid = 3;//释放的技能id
+	string atkstation = 4;//combat_general中武将的阵位
+	repeated once_attack battleValue = 5;//本回合中的攻击(回血)
+	repeated once_buff buffValue = 6;//本回合中的buff
+	repeated once_back backValue = 7;//本回合中的反伤，吸血
+	repeated once_buffstep buffstep = 8;
+}
+
+
+//定义战斗数据
+message combatInfo{
+	//combat_point point = 1;
+	combat_member attacker = 1;//进攻方
+	combat_member defencer = 2;//防守方
+	combat_wall wall = 3;//箭塔信息
+	repeated round_info rounsds=4; //每回合数据
+}

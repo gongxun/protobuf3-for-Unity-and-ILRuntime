@@ -1,0 +1,10 @@
+﻿syntax = "proto3";
+package gx_test_other;
+
+
+message gx_data_other{
+	float sc_float = 2;
+	int32 sc_int32 = 3;
+	string sc_string = 6;
+}
+

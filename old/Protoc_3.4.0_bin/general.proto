@@ -1,0 +1,40 @@
+﻿syntax = "proto3";
+package General;
+
+option java_package = "com.jedi.serverEngine.message";  
+option java_outer_classname = "PBGeneral";
+
+
+
+
+//定义武将信息结构
+message general_info{
+	uint32 index = 1; //武将索引
+	uint32 gid = 2; //武将id
+	uint32 army_id = 3; //所属军团(1-5) 0表示不在军团
+	uint32 pos = 4; //阵位编号（1-6） 0表示不在军团
+}
+
+
+//获取所有武将信息
+message req_getAll{
+
+}
+
+
+
+message rsp_getAll{
+	repeated general_info generals = 1;
+}
+
+
+//武将布阵
+message req_embattle{
+	uint32 index = 1; //武将索引
+	uint32 army_id = 2; //军团编号(1-5)  0表示下阵
+	uint32 pos = 3; //阵位编号(1-6)	0表示下阵
+}
+
+message rsp_embattle{	
+	repeated general_info changes = 1; //发生变化的武将
+}

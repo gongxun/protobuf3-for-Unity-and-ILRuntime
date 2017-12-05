@@ -1,0 +1,54 @@
+﻿syntax = "proto3";
+package Item;
+
+option java_package = "com.jedi.serverEngine.message";  
+option java_outer_classname = "PBItem";
+
+
+
+message one_item{
+	uint32 id = 1; //物品id，见cfg_item
+	uint32 amount = 2; //数量
+}
+
+
+
+//服务端推送消息,物品变化
+message push_itemChange{
+	repeated one_item changes = 1; //变化的物品
+}
+
+
+//客户端请求物品
+message req_getItem{
+
+}
+
+
+message rsp_getItem{
+	repeated one_item items = 1;// 所有物品
+}
+
+
+
+//客户端请求使用物品
+message req_useItem{
+	uint32 id = 1; //物品id
+	uint32 amount = 2; //使用数量
+}
+
+
+message rsp_useItem{
+
+}
+
+
+
+
+
+
+
+
+
+
+

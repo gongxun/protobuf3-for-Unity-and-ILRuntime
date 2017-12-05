@@ -1,0 +1,55 @@
+﻿syntax = "proto3";
+package Role;
+
+option java_package = "com.jedi.serverEngine.message";  
+option java_outer_classname = "PBRole";
+
+
+
+
+
+//客户端请求角色信息
+message req_get{	
+	
+}
+
+
+
+message role_info{
+	string name = 1;	//名字
+	uint32 level = 2; //官职等级
+	uint32 room_id = 3; //房间号，0表示不在房间
+	uint32 score = 4; //积分
+}
+
+//服务端响应角色信息
+message rsp_get{
+	role_info info = 1; //
+	uint32 map_id = 2; //如果info 存在且room_id 不为0, map_id 表示地图id
+}
+
+
+//客户端请求创建角色
+message req_create{
+
+	string name = 1;
+
+}
+
+
+//服务端相应创建角色
+message rsp_create{
+
+	role_info info = 1; //新创建的role的信息
+}
+
+
+//服务端推送角色信息改变
+message push_roleInfo{	
+	role_info info = 1;//只发其中改变的信息
+}
+
+
+
+
+

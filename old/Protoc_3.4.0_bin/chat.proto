@@ -1,0 +1,49 @@
+﻿syntax = "proto3";
+package Chat;
+
+option java_package = "com.jedi.serverEngine.message";  
+option java_outer_classname = "PBChat";
+
+
+//定义聊天频道
+enum chat_channel{	
+	chat_type_null = 0;
+	chat_type_private = 1;  //私聊
+	chat_type_room = 2;   //房间聊天
+	chat_type_guild = 3;  //公会聊天
+	chat_type_team = 4; //组队聊天
+	chat_type_area = 5; //同服务器聊天
+	chat_type_world = 6; //世界聊天
+}
+
+
+
+//聊天推送消息
+message push_chat{	
+	uint64 from_uid = 1; //发起者uid
+	string from_name = 2; //发起者名字	
+	string content = 3; //聊天内容
+	chat_channel channel = 4; //聊天频道
+}
+
+
+//客户端发送聊天消息
+message req_chat{
+	string content = 1; //聊天内容	
+	chat_channel channel = 2; //聊天频道
+	uint64 target = 3; //目标的uid，私聊时才有
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,156 @@
+﻿syntax = "proto3";
+import "combat.proto";
+package Map;
+
+option java_package = "com.jedi.serverEngine.message";
+option java_outer_classname = "PBMap";
+
+
+//进入房间请求
+message req_enter{	
+	
+}
+
+
+message rsp_enter{	
+	uint32 room_id = 1; //房间号
+	uint32 map_id = 2; //地图文件编号
+}
+
+
+
+
+//定义据点信息
+message point_info{
+	uint32 id = 1; //服务端分配的编号
+	uint32 type = 2; //类型
+	uint32 garrison = 3; //驻守军队的编号，0表示没有
+	string indentify = 4; //地图文件中的据点标识
+	string name = 5; //据点名称
+	repeated uint32 armys = 6; //军队列表数据
+	uint32 owner = 7; //领主id
+}
+
+
+//获取据点信息
+message req_getPoint{
+	
+}
+
+
+message rsp_getPoint{
+	repeated point_info points = 1; //所有据点信息
+}
+
+
+//服务器推送据点变化信息
+message push_pointInfo{
+	repeated point_info points = 1; //变化的据点信息
+}
+
+
+//定义领主信息
+message lord_info{
+	uint32 id = 1; //服务端分配的编号
+	uint64 uid = 2; //玩家的uid
+	string name = 3; //玩家名字
+	uint32 alliance = 4;  //同盟id，0表示未结盟	
+}
+
+
+//获取所有领主信息
+message req_getLord{
+	
+
+}
+
+
+message rsp_getLord{
+	repeated lord_info lords = 1; //地图内所有领主信息
+}
+
+
+
+
+//推送领主信息
+message push_lordChange{	
+	repeated lord_info lords = 1; //领主信息新加或者变化
+	repeated uint32 remove = 2; //移除领主id
+}
+
+
+
+//定义军队信息
+message army_info{
+	uint32 army_id = 1; //自己军团编号(1-5)
+	uint32 id = 2; //服务端分配的编号
+	uint32 last_point = 3; //最近所在点
+	uint32 next_point = 4; //行军的下一个目标点位置，如果是0，表示没有在行军，就不会下面的字段
+	repeated uint32 move_list = 5; //除去next_point之外的行军列表
+	uint64 arrive_time = 6; //到达next_point的时间戳
+	uint32 lord_id = 7; //所属的领主id
+}
+
+
+//获取己方军队信息
+message req_getArmy{
+
+}
+
+message rsp_getArmy{
+	uint32 lord_id = 1; //自己的领主id
+	repeated army_info armys = 2; //自己的军队信息
+}
+
+
+
+
+
+//服务器推送军队变化信息
+message push_armyInfo{
+	repeated army_info armys = 1; //只发送发生变化的军队信息
+}
+
+
+
+//获取地图内所有信息
+message req_getAll{
+
+}
+
+
+message rsp_getAll{
+	repeated lord_info lords = 1; //地图内所有领主信息	
+	uint32 lord_id = 2; //自己的领主id
+	repeated army_info armys = 3; //自己的军队信息
+	repeated point_info points = 4; //所有据点信息
+}
+
+
+
+
+
+
+
+
+
+
+
+
+//玩家移动军队
+message req_moveArmy{
+	uint32 army_id = 1; //军团编号
+	repeated uint32 move_list = 2; //移动点的列表
+}
+
+//读取战斗数据文件
+message req_getCombatInfo{
+	uint32 battle_id = 1; //战斗日志编号
+}
+message rsp_getCombatInfo{
+	Combat.combatInfo combatInfo = 1; //战斗日志信息
+}
+//战斗测试
+message req_testBattle{
+	
+}

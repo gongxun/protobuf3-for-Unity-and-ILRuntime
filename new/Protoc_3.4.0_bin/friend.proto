@@ -1,0 +1,92 @@
+﻿syntax = "proto3";
+package Friend;
+
+option java_package = "com.jedi.serverEngine.message";  
+option java_outer_classname = "PBFriend";
+
+
+
+//定义好友结构
+message friend_info{
+	uint64 uid = 1; 
+	string name = 2;
+	uint32 level = 3;
+	uint32 entry = 4; //角色模板，头像？
+	bool isOnline = 5; //是否在线
+	uint64 recent_online = 6;//最近在线
+}
+
+//定义邀请信息
+message invite_info{
+	uint64 uid = 1; 
+	string name = 2;
+	uint32 entry = 3;
+}
+
+
+
+//客户端请求好友列表
+message req_getFriends{
+
+
+}
+
+
+//服务端响应
+message rsp_getFriends{	
+	repeated friend_info friends = 1; //好友信息
+	repeated invite_info invites = 2; //邀请信息
+}
+
+
+
+//客户端请求添加好友
+message req_add{	
+	uint64 uid = 1; //如果能获取uid,优先使用uid
+	string name = 2; //获取不到，就使用角色名字查找
+}
+
+
+//服务端推送好友邀请
+message push_invite{
+	uint64 uid = 1; //邀请人uid
+	string name = 2; //邀请人名字
+}
+
+
+//客户端确认邀请
+message req_inviteSure{
+	uint64 uid = 1; //邀请人uid
+	bool sure = 2; //是否接受邀请
+}
+
+
+
+//服务端推送新的好友
+message push_newFriends{
+	friend_info info = 1; //新加的好友信息
+}
+
+
+
+
+//客户端请求删除好友
+message req_del{
+	uint64 uid = 1; 
+}
+
+
+
+//服务端推送删除好友
+message push_del{
+	uint64 uid = 1;  
+}
+
+
+
+
+
+
+
+
+

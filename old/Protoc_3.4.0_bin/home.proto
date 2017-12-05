@@ -1,0 +1,45 @@
+﻿syntax = "proto3";
+package Home;
+
+option java_package = "com.jedi.serverEngine.message";  
+option java_outer_classname = "PBHome";
+
+
+message req_login{	
+	string account = 1; //账号
+	string password = 2; //密码
+	string channel = 3; //渠道
+	string device = 4;	//设备id	
+}
+
+
+message rsp_login{	
+	string address = 1; //网关地址
+	uint32 port = 2; //网关端口
+	uint64 uid = 3; //用户id
+	uint32 session = 4;	//session登录网关时校验
+}
+
+
+
+message req_check{
+	uint64 uid = 1; //用户id
+	uint32 session = 2; //session用于校验
+}
+
+
+message rsp_check{
+	
+}
+
+
+message req_synchronize{
+
+
+}
+
+
+message rsp_synchronize{
+
+	uint64 time = 1; //同步时间戳
+}
