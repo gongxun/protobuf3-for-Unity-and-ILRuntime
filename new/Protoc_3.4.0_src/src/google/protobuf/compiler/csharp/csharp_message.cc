@@ -146,12 +146,15 @@ void MessageGenerator::Generate(io::Printer* printer) {
     const FieldDescriptor* fieldDescriptor = descriptor_->field(i);
 
     // Rats: we lose the debug comment here :(
+    /*
     printer->Print(
       "/// <summary>Field number for the \"$field_name$\" field.</summary>\n"
       "public const int $field_constant_name$ = $index$;\n",
       "field_name", fieldDescriptor->name(),
       "field_constant_name", GetFieldConstantName(fieldDescriptor),
       "index", SimpleItoa(fieldDescriptor->number()));
+*/
+
     scoped_ptr<FieldGeneratorBase> generator(
         CreateFieldGeneratorInternal(fieldDescriptor));
     generator->GenerateMembers(printer);
